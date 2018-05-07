@@ -20,6 +20,8 @@ service.listen(port)
 
 setInterval(function () {
   link.announce('etoro_cris', service.port, {})
+
+  // establish a mapping for port 13378
   service.socket.send(Buffer('hello'), 0, 5, port, 'no-reply.bitfinex.com')
 }, 1000)
 

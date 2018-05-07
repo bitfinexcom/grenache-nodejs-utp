@@ -31,3 +31,30 @@ npm i -g grenache-grape
 grape --dp 20001 --aph 30001 --bn '127.0.0.1:20002'
 grape --dp 20002 --aph 40001 --bn '127.0.0.1:20001'
 ```
+
+### Testing
+
+Run a Grape instance on a server, lets say the server has the IP `157.81.109.241`:
+
+```
+DEBUG=* grape --dp 20001 --aph 30001 --bn '127.0.0.1:20002'
+```
+
+
+Then start a Grape instance locally on your machine, behind a NAT, and connect it to the other Grape:
+
+```
+DEBUG=* grape --dp 20002 --aph 30001 --bn '157.81.109.241:20001'
+```
+
+On your local machine behind the NAT, start the service:
+
+```
+node examples/nat_server.js
+```
+
+From your external server, you should be able to connect to the machine behind the NAT now:
+
+```
+node examples/rpc_client.js
+```
