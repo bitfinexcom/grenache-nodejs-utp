@@ -1,0 +1,28 @@
+{
+  "name": "grenache-nodejs-utp",
+  "version": "1.0.0",
+  "description": "UTP adapter for Grenache",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard && mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitfinexcom/grenache-nodejs-utp.git"
+  },
+  "keywords": [
+    "Grenache",
+    "UTP",
+    "DHT"
+  ],
+  "author": "Robert Kowalski <robert@bitfinex.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "cbq": "0.0.1",
+    "grenache-nodejs-base": "^0.7.1",
+    "utp-native": "^1.7.0"
+  },
+  "devDependencies": {
+    "grenache-nodejs-link": "^0.7.7"
+  }
+}

@@ -1,0 +1,6 @@
+node_modules
+*.swp
+*.swo
+.DS_Store
+npm-debug.log
+package-lock.json
