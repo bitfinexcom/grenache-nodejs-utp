@@ -1,3 +1,5 @@
+'use strict'
+
 exports.register = register
 function register (peer, isServer, cb) {
   peer.request('etoro_broker', {
