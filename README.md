@@ -18,6 +18,10 @@ Internally, Grenache uses Distributed Hash Tables (DHT, known from Bittorrent) f
 npm install --save grenache-nodejs-utp
 ```
 
+### API
+
+[/examples/](/examples/)
+
 ### Other Requirements
 
 Install `Grenache Grape`: https://github.com/bitfinexcom/grenache-grape:
@@ -47,14 +51,20 @@ Then start a Grape instance locally on your machine, behind a NAT, and connect i
 DEBUG=* grape --dp 20002 --aph 30001 --bn '157.81.109.241:20001'
 ```
 
+On your remote server, start the broker:
+
+```
+node examples/nat_w_broker/broker.js
+```
+
 On your local machine behind the NAT, start the service:
 
 ```
-node examples/nat_server.js
+node examples/nat_w_broker/nat_server.js
 ```
 
 From your external server, you should be able to connect to the machine behind the NAT now:
 
 ```
-node examples/rpc_client.js
+node examples/nat_w_broker/rpc_client.js
 ```

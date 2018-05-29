@@ -1,2 +1,2 @@
-module.exports.PeerRPCClient = require('./lib/PeerRPCClient.js')
-module.exports.PeerRPCServer = require('./lib/PeerRPCServer.js')
+exports.PeerRPCClient = require('./lib/PeerRPCClient.js')
+exports.PeerRPCServer = require('./lib/PeerRPCServer.js')
