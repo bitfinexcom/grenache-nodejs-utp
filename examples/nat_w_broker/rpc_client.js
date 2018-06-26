@@ -23,7 +23,7 @@ service.on('punch', (other) => {
   })
 })
 
-service.on('error', () => {
+service.on('error', (err) => {
   console.log(err)
   console.trace()
 })
@@ -34,7 +34,6 @@ function kick () {
   register(peer, false, (err, res) => {
     if (err) {
       console.error(err)
-      return
     }
   })
 }
