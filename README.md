@@ -63,7 +63,10 @@ Start the party which runs on the public server. It will announce itself as `fib
 node examples/punch_simple_servers/rpc_server_public.js
 ```
 
-When you now start `rpc_server_behind_nat.js` it will look up any consumers. It will send a UDP packet to the consumer and establish a temporary local ad-hoc routing in the NAT. When the packet arrives at the public server, it will emit a `punch` event. The public server handles the events, gets and kicks its request for calculation.
+Start `rpc_server_behind_nat.js` on your local machine behind the router now. It looks up possible consumers and sends a UDP packet to the consumer. This establishes a temporary ad-hoc routing for the service running in the home network.
+
+When the packet arrives at the public server, it will emit a `punch` event. The public server handles the event and gets the IP/port from the ad-hoc routing. It then kicks of the request for calculation.
+
 
 ```
 node examples/punch_simple_servers/rpc_server_behind_nat.js
