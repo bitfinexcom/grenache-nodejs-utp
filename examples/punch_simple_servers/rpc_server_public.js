@@ -38,7 +38,7 @@ service.on('punch', (other) => {
   peer.request(other, { length: 10 }, { timeout: 10000 }, (err, data) => {
     if (err) return console.error(err)
 
-    console.log('got data reply')
+    console.log('got data reply, sequence is:')
     console.log(data)
   })
 })
