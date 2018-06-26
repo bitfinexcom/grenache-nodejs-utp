@@ -2,16 +2,16 @@
 
 exports.register = register
 function register (peer, isServer, cb) {
-  peer.request('etoro_broker', {
-    service: 'etoro_cris',
+  peer.request('fibo_broker', {
+    service: 'fibonacci_worker',
     server: isServer
   }, { timeout: 10000 }, (err, data) => {
     if (err) return cb(err)
 
-    const pool = Object.keys(data['etoro_cris'])
+    const pool = Object.keys(data['fibonacci_worker'])
 
     const clients = pool.filter((el) => {
-      const tmp = data['etoro_cris'][el]
+      const tmp = data['fibonacci_worker'][el]
 
       const isClient = !isServer
       if (isClient) {
@@ -22,7 +22,7 @@ function register (peer, isServer, cb) {
     })
 
     const res = clients.map((el) => {
-      return data['etoro_cris'][el]
+      return data['fibonacci_worker'][el]
     })
 
     cb(null, res)

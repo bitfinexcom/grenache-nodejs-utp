@@ -1,9 +1,7 @@
 'use strict'
 
-const { PeerRPCServer, PeerRPCClient } = require('./../../')
+const { PeerRPCServer } = require('./../../')
 const Link = require('grenache-nodejs-link')
-
-const { register } = require('./register.js')
 
 const link = new Link({
   grape: 'http://127.0.0.1:30001'
@@ -17,38 +15,12 @@ peer.init()
 
 const service = peer.transport('server')
 service.listen()
-
-const peerClient = new PeerRPCClient(link, {})
-peerClient.init()
-
 console.log('listening on', service.port)
 
 setInterval(function () {
   link.announce('fibonacci_worker', service.port, {})
-
-  register(peerClient, true, (err, res) => {
-    if (err) {
-      console.error(err)
-      return
-    }
-
-    connect(peerClient, res)
-  })
-}, 2000)
-
-function connect (peer, clients) {
-  if (!clients) return
-
-  const target = clients.pop()
-
-  if (!target) return
-
-  console.log(`handshaking with ${target.address}:${target.port} ...`)
-
-  service.punch(target)
-
-  connect(clients)
-}
+  peer.punch('fibonacci_consumer')
+}, 1000)
 
 service.on('request', (rid, key, payload, handler, cert, additional) => {
   console.log('received request, calculating & replying...')
@@ -58,6 +30,8 @@ service.on('request', (rid, key, payload, handler, cert, additional) => {
 
 service.on('punch', (other) => {
   console.log('punch from', other)
+  // console.log('punching back...')
+  // service.punch(other)
 })
 
 function fibonacci (length) {

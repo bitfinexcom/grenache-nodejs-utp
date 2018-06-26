@@ -15,7 +15,7 @@ const client = peer.transport('client', {})
 client.on('punch', (other) => {
   console.log('received punch back from', other, 'requesting data...')
 
-  peer.request('etoro_cris', 'hello', { timeout: 10000 }, (err, data) => {
+  peer.request(other, { length: 10 }, { timeout: 10000 }, (err, data) => {
     console.log('got data reply')
     if (err) console.error(err)
 
@@ -25,6 +25,6 @@ client.on('punch', (other) => {
 
 // convenience method to start a punching process with a grenache service
 // assuming the rpc_server is not behind a nat
-peer.punch('etoro_cris', (err) => {
+peer.punch('fibonacci_worker', (err) => {
   if (err) throw err
 })
