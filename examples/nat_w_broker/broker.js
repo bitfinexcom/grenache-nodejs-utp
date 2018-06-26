@@ -19,7 +19,7 @@ const service = peer.transport('server')
 service.listen()
 
 setInterval(function () {
-  link.announce('etoro_broker', service.port, {})
+  link.announce('fibo_broker', service.port, {})
 }, 1000)
 
 const options = { max: 500, maxAge: 1000 * 15 }
@@ -36,10 +36,10 @@ service.on('request', (rid, key, payload, handler, cert, additional) => {
   const hashed = crypto.createHash('md5').update(JSON.stringify(payload)).digest('hex')
   cache.set(hashed, payload)
 
-  const res = { etoro_cris: {} }
+  const res = { fibonacci_worker: {} }
 
   cache.forEach((v, k) => {
-    res.etoro_cris[k] = v
+    res.fibonacci_worker[k] = v
   })
 
   console.log('#services', JSON.stringify(res, null, ' '))

@@ -16,7 +16,7 @@ const service = peer.transport('client', {})
 service.on('punch', (other) => {
   console.log('received punch back from', other, 'requesting data...')
 
-  peer.request(other, { msg: 'hello' }, { timeout: 10000 }, (err, data) => {
+  peer.request(other, { length: 10 }, { timeout: 10000 }, (err, data) => {
     if (err) console.error(err)
 
     console.log(data)

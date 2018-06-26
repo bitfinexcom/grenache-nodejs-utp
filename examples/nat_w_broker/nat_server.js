@@ -24,7 +24,7 @@ peerClient.init()
 console.log('listening on', service.port)
 
 setInterval(function () {
-  link.announce('etoro_cris', service.port, {})
+  link.announce('fibonacci_worker', service.port, {})
 
   register(peerClient, true, (err, res) => {
     if (err) {
@@ -51,9 +51,28 @@ function connect (peer, clients) {
 }
 
 service.on('request', (rid, key, payload, handler, cert, additional) => {
-  handler.reply(null, 'strategy is everything')
+  console.log('received request, calculating & replying...')
+  const result = fibonacci(payload.length)
+  handler.reply(null, result)
 })
 
 service.on('punch', (other) => {
   console.log('punch from', other)
 })
+
+function fibonacci (length) {
+  const res = []
+
+  function _fibonacci (n) {
+    if (n <= 1) {
+      return 1
+    }
+    return _fibonacci(n - 1) + _fibonacci(n - 2)
+  }
+
+  for (let i = 0; i < length; i++) {
+    res.push(_fibonacci(i))
+  }
+
+  return res
+}
