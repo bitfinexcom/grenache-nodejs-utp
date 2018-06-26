@@ -26,6 +26,8 @@ const options = { max: 500, maxAge: 1000 * 15 }
 const cache = LRU(options)
 
 service.on('request', (rid, key, payload, handler, cert, additional) => {
+  // in the additional variable we get the external IP and port of the sender,
+  // which we will use for our "holepunch registry"
   console.log(`got reply from to ${additional.address}:${additional.port}`)
 
   payload.address = additional.address

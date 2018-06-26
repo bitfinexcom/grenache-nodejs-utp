@@ -19,18 +19,19 @@ console.log('listening on', service.port)
 
 setInterval(function () {
   link.announce('fibonacci_worker', service.port, {})
+  peer.punch('fibonacci_consumer')
 }, 1000)
 
 service.on('request', (rid, key, payload, handler, cert, additional) => {
-  console.log('received request, replying...')
+  console.log('received request, calculating & replying...')
   const result = fibonacci(payload.length)
   handler.reply(null, result)
 })
 
 service.on('punch', (other) => {
   console.log('punch from', other)
-  console.log('punching back...')
-  service.punch(other)
+  // console.log('punching back...')
+  // service.punch(other)
 })
 
 function fibonacci (length) {

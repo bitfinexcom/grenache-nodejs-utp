@@ -36,7 +36,44 @@ grape --dp 20001 --aph 30001 --bn '127.0.0.1:20002'
 grape --dp 20002 --aph 40001 --bn '127.0.0.1:20001'
 ```
 
-### Testing
+
+### Testing: with just one party behin a NAT
+
+In a lot of scenarios just one party is behind a NAT and the other is available with a public port and IP.
+
+#### Instructions
+
+Run a Grape instance on the public server, lets say the server has the IP `157.81.109.241`:
+
+```
+DEBUG=* grape --dp 20001 --aph 30001 --bn '127.0.0.1:20002'
+```
+
+Then start a Grape instance locally on your machine, behind a NAT, and connect it to the other Grape:
+
+```
+DEBUG=* grape --dp 20002 --aph 30001 --bn '157.81.109.241:20001'
+```
+
+You should see both Grapes connecting to each other.
+
+Start the party which runs on the public server. It will announce itself as `fibonacci_consumer` on the network:
+
+```
+node examples/punch_simple_servers/rpc_server_public.js
+```
+
+When you now start `rpc_server_behind_nat.js` it will look up any consumers. It will send a UDP packet to the consumer and establish a temporary local ad-hoc routing in the NAT. When the packet arrives at the public server, it will emit a `punch` event. The public server handles the events, gets and kicks its request for calculation.
+
+```
+node examples/punch_simple_servers/rpc_server_behind_nat.js
+```
+
+### Testing: with broker
+
+In case both services are behin a NAT, we have to make use of a shared and common broker. This can be a normal server which is reachable by both parties by an address and port kown from all parties.
+
+#### Instructions
 
 Run a Grape instance on a server, lets say the server has the IP `157.81.109.241`:
 
